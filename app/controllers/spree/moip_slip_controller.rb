@@ -1,5 +1,6 @@
 module Spree
   class MoipSlipController < Spree::StoreController
+    skip_before_action :verify_authenticity_token, only: :notification
     before_filter :set_order
     respond_to :json, :only => [:generate_token]
 
@@ -7,7 +8,7 @@ module Spree
       payment = Spree::Payment.find_by_identifier(params[:id_transacao])
       payment.started_processing!
 
-      if params[:status_pagamento].eql?('4') && payment.amount.to_s.eql?(params[:valor])
+      if params[:status_pagamento].eql?('4') && (payment.amount * 100)to_i.eql?(params[:valor])
         logger.info "[MOIP] Order #{@order.number} approved"
         payment.complete!
         @order.next
