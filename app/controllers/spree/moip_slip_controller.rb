@@ -28,7 +28,7 @@ module Spree
     private
     def set_order
       @order = current_order
-      @payment_method = Spree::PaymentMethod.find(params[:payment_method_id])
+      @payment_method = Spree::PaymentMethod.find(params[:payment_method_id]) if params[:payment_method_id]
     end
   end
 end
