@@ -1,1 +1,18 @@
-<%= link_to Spree.t('slip', :scope => 'moip'), spree.order_moip_slip_index_path(payment_method_id: payment_method.id), method: :post, target: '_blank' %>
+<script>
+  SpreeMoip.paymentMethodId = <%= payment_method.id %>;
+</script>
+
+<div id="MoipWidget"
+  data-token=""
+  callback-method-success="SpreeMoip.success"
+  callback-method-error="SpreeMoip.failure"></div>
+<a href="#" class='button' onclick="SpreeMoip.generateSlip()">Imprimir Boleto</a>
+
+<% if payment_method.preferences[:server].eql? 'sandbox'%>
+  <% base_url = 'https://desenvolvedor.moip.com.br/sandbox/'%>
+<% else %>
+  <% base_url = 'https://www.moip.com.br/'%>
+<% end %>
+
+<script type='text/javascript' src='<%= base_url %>transparente/MoipWidget-v2.js' charset=ISO-8859-1"></script>
+

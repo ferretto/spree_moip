@@ -5,6 +5,14 @@ module Spree
     preference :sandbox_key, :string
     preference :production_token, :string
     preference :production_key, :string
+    preference :expiration_days_after_slip_creation, :integer, default: 3
+    preference :real_expiration_days, :integer, default: 5
+    preference :expiration_days_type, :string, default: 'business_day'
+    preference :instruction_line_1, :string
+    preference :instruction_line_2, :string
+    preference :instruction_line_3, :string
+    preference :logo_url, :string
+    preference :payment_reason, :string, default: Spree::Config.site_name
 
     def actions
       %w{capture void}
@@ -28,11 +36,7 @@ module Spree
     end
 
     def source_required?
-      true
-    end
-
-    def payment_source_class
-      MoipSlip
+      false
     end
   end
 end
