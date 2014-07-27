@@ -12,7 +12,7 @@ module Spree
     preference :instruction_line_2, :string
     preference :instruction_line_3, :string
     preference :logo_url, :string
-    preference :payment_reason, :string, default: Spree::Config.site_name
+    preference :payment_reason, :string
 
     def actions
       %w{capture void}
