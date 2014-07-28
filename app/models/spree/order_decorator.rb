@@ -1,5 +1,5 @@
 module Spree
   Order.class_eval do
-    has_one :moip_token
+    has_many :moip_tokens
   end
 end
