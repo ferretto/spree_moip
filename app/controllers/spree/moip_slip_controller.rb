@@ -5,7 +5,7 @@ module Spree
     respond_to :json, :only => [:generate_token]
 
     def notification
-      payment = Spree::Payment.find_by_identifier(params[:id_transacao])
+      payment = Spree::Payment.find_by_identifier(params[:id_transacao].split("_").first)
       payment.started_processing!
 
       if params[:status_pagamento].eql?('4') && (payment.amount * 100).to_i.to_s.eql?(params[:valor])
