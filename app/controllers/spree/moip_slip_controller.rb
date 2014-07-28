@@ -10,11 +10,11 @@ module Spree
       payment.started_processing!
 
       if params[:status_pagamento].eql?('4') && (payment.amount * 100).to_i.to_s.eql?(params[:valor])
-        logger.info "[MOIP] Order #{@order.number} approved"
+        logger.info "[MOIP] Order #{order.number} approved"
         payment.complete!
         order.next
       else
-        logger.info "[MOIP] Order #{@order.number} failed"
+        logger.info "[MOIP] Order #{order.number} failed"
         payment.pend!
       end
 
