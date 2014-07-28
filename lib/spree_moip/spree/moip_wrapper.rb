@@ -10,7 +10,12 @@ module Spree
     end
 
     def generate_token
-      transparent_request.token
+      if @order.moip_token.nil?
+        @order.create_moip_token!(token: transparent_request.token, amount: @order.total)
+      elsif @order.moip_token.amount != @order.total
+        @order.moip_token.update_attributes(token: transparent_request.token, amount: @order.total)
+      end
+      @order.moip_token.token
     end
 
     private
@@ -21,7 +26,7 @@ module Spree
     end
 
     def uniq_transaction_id
-      "#{order.payments.last.identifier}"
+      "#{order.number}_#{(order.total * 100).to_i}"
     end
 
     def instruction

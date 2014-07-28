@@ -21,7 +21,6 @@ module Spree
     end
 
     def generate_token
-      @order.payments.create(order: @order, amount: @order.total, payment_method: @payment_method)
       render :json => {:token => Spree::MoipWrapper.new(@order, @payment_method).generate_token}
     end
 
